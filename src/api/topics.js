@@ -56,6 +56,10 @@ topicsAPI.create = async function (caller, data) {
 	}
 
 	const payload = { ...data };
+
+	// Add the anonymous flag from the request body
+    payload.anonymous = !!data.anonymous; // Ensure it's a boolean
+
 	payload.tags = payload.tags || [];
 	apiHelpers.setDefaultPostData(caller, payload);
 	const isScheduling = parseInt(data.timestamp, 10) > payload.timestamp;
@@ -88,6 +92,10 @@ topicsAPI.reply = async function (caller, data) {
 		throw new Error('[[error:invalid-data]]');
 	}
 	const payload = { ...data };
+
+	// Add the anonymous flag from the request body
+    payload.anonymous = !!data.anonymous; // Ensure it's a boolean
+	
 	apiHelpers.setDefaultPostData(caller, payload);
 
 	await meta.blacklist.test(caller.ip);
