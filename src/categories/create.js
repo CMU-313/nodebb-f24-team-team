@@ -24,27 +24,7 @@ module.exports = function (Categories) {
 		const order = data.order || smallestOrder; // If no order provided, place it at the top
 		const colours = Categories.assignColours();
 
-		let category = {
-			cid: cid,
-			name: data.name,
-			description: data.description ? data.description : '',
-			descriptionParsed: data.descriptionParsed ? data.descriptionParsed : '',
-			icon: data.icon ? data.icon : '',
-			bgColor: data.bgColor || colours[0],
-			color: data.color || colours[1],
-			slug: slug,
-			parentCid: parentCid,
-			topic_count: 0,
-			post_count: 0,
-			disabled: data.disabled ? 1 : 0,
-			order: order,
-			link: data.link || '',
-			numRecentReplies: 1,
-			class: (data.class ? data.class : 'col-md-3 col-6'),
-			imageClass: 'cover',
-			isSection: 0,
-			subCategoriesPerPage: 10,
-		};
+		let category = getCategory(cid, data, colours, slug, parentCid, order);
 
 		if (data.backgroundImage) {
 			category.backgroundImage = data.backgroundImage;
@@ -109,6 +89,30 @@ module.exports = function (Categories) {
 		plugins.hooks.fire('action:category.create', { category: category });
 		return category;
 	};
+
+	function getCategory(cid, data, colours, slug, parentCid, order) {
+		return {
+			cid: cid,
+			name: data.name,
+			description: data.description ? data.description : '',
+			descriptionParsed: data.descriptionParsed ? data.descriptionParsed : '',
+			icon: data.icon ? data.icon : '',
+			bgColor: data.bgColor || colours[0],
+			color: data.color || colours[1],
+			slug: slug,
+			parentCid: parentCid,
+			topic_count: 0,
+			post_count: 0,
+			disabled: data.disabled ? 1 : 0,
+			order: order,
+			link: data.link || '',
+			numRecentReplies: 1,
+			class: (data.class ? data.class : 'col-md-3 col-6'),
+			imageClass: 'cover',
+			isSection: 0,
+			subCategoriesPerPage: 10,
+		};
+	}
 
 	async function clearParentCategoryCache(parentCid) {
 		while (parseInt(parentCid, 10) >= 0) {
