@@ -82,3 +82,11 @@ Interested in a sublicense agreement for use of NodeBB in a non-free/restrictive
 * Unofficial IRC community &ndash; channel `#nodebb` on Libera.chat
 * [Follow us on Twitter](http://www.twitter.com/NodeBB/ "NodeBB Twitter")
 * [Like us on Facebook](http://www.facebook.com/NodeBB/ "NodeBB Facebook")
+
+## Teammates
+
+* Justin Ankrom (jankrom)
+* Matthew Wong (chunkitw)
+* Margaret He (mche)
+* Tim Wang (twang3)
+* Rosemary Yang (rey)
