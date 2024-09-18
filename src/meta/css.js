@@ -197,6 +197,14 @@ async function getImports(files, extension) {
 	return source;
 }
 
+function getBaseTheme(themeData, themeId) {
+	return path.join(
+		nconf.get('themes_path'),
+		(themeData['theme:type'] && themeData['theme:type'] === 'local' ? themeId : 'nodebb-theme-harmony')
+	);
+}
+
+
 async function getBundleMetadata(target) {
 	const paths = [
 		path.join(__dirname, '../../node_modules'),
@@ -222,10 +230,7 @@ async function getBundleMetadata(target) {
 	if (target === 'client') {
 		themeData = await db.getObjectFields('config', ['theme:type', 'theme:id', 'useBSVariables', 'bsVariables']);
 		const themeId = (themeData['theme:id'] || 'nodebb-theme-harmony');
-		const baseThemePath = path.join(
-			nconf.get('themes_path'),
-			(themeData['theme:type'] && themeData['theme:type'] === 'local' ? themeId : 'nodebb-theme-harmony')
-		);
+		const baseThemePath = getBaseTheme(themeData, themeId);
 		paths.unshift(baseThemePath);
 		paths.unshift(`${baseThemePath}/node_modules`);
 		themeData.bsVariables = parseInt(themeData.useBSVariables, 10) === 1 ? (themeData.bsVariables || '') : '';
