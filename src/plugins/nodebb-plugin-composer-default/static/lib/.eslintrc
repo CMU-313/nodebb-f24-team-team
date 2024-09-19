@@ -1,0 +1,7 @@
+{
+	"extends": "nodebb/public",
+  "rules": {
+    "no-cond-assign": ["error", "except-parens"],
+    "no-tabs": 0
+  }
+}

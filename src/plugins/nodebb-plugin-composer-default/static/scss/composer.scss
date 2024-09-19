@@ -1,0 +1,385 @@
+.composer {
+	background-color: var(--bs-body-bg);
+	color: var(--bs-body-color);
+	z-index: $zindex-dropdown;
+	visibility: hidden;
+	padding: 0;
+	position: fixed;
+	bottom: 0;
+	top: 0;
+	right: 0;
+	left: 0;
+
+	.mobile-navbar {
+		position: static;
+		min-height: 40px;
+		margin: 0;
+
+		.btn-group {
+			flex-shrink: 0;
+		}
+
+		button {
+			font-size: 20px;
+		}
+
+		display: flex;
+
+		.category-name-container, .title {
+			text-align: center;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+			flex-grow: 2;
+			font-size: 16px;
+			line-height: inherit;
+			padding: 9px 5px;
+			margin: 0;
+		}
+	}
+
+	.title-container {
+		> div[data-component="composer/handle"] {
+			flex: 0.33;
+		}
+
+		.category-list-container {
+
+			[component="category-selector"] {
+				.category-dropdown-menu {
+					max-height: 300px;
+				}
+			}
+		}
+
+		.category-list {
+			padding: 0 2rem;
+		}
+
+		.action-bar {
+			.dropdown-menu:empty {
+				& ~ .dropdown-toggle {
+					display: none;
+				}
+			}
+		}
+	}
+
+	.formatting-bar {
+		.spacer {
+			&:before {
+				content: ' | ';
+				color: $gray-200;
+			}
+		}
+	}
+
+	.tags-container {
+		[component="composer/tag/dropdown"] {
+			.dropdown-menu {
+				max-height: 400px;
+				overflow-y: auto;
+			}
+
+			> button {
+				border: 0;
+			}
+		}
+		// if picking tags from taglist dropdown hide the input
+		&.haswhitelist .bootstrap-tagsinput {
+			input {
+				display: none;
+			}
+		}
+		.bootstrap-tagsinput {
+			background: transparent;
+			flex-grow: 1;
+			border: 0;
+			padding: 0;
+			box-shadow: none;
+			max-height: 80px;
+			overflow: auto;
+
+			input {
+				&::placeholder{
+					color: $input-placeholder-color;
+				}
+				color: $body-color;
+				font-size: 16px;
+				width: 50%;
+				@include media-breakpoint-down(md) {
+					width: 100%;
+				}
+
+
+				height: 28px;
+				padding: 4px 6px;
+			}
+
+			.ui-autocomplete {
+				max-height: 350px;
+				overflow-x: hidden;
+				overflow-y: auto;
+			}
+		}
+	}
+
+	.resizer {
+		background: linear-gradient(transparent, var(--bs-body-bg));
+		margin-left: calc($spacer * -0.5);
+		padding-left: $spacer;
+
+		.trigger {
+			cursor: ns-resize;
+
+			.handle {
+				border-top-left-radius: 50%;
+				border-top-right-radius: 50%;
+				border-bottom: 0 !important;
+			}
+		}
+	}
+
+	.minimize {
+		display: none;
+		position: absolute;
+		top: 0px;
+		right: 10px;
+		height: 0;
+
+		@include pointer;
+
+		.trigger {
+			position: relative;
+			display: block;
+			top: -20px;
+			right: 0px;
+			margin: 0 auto;
+			margin-left: 20px;
+			line-height: 26px;
+			@include transition(filter .15s linear);
+
+			&:hover {
+				filter: invert(100%);
+			}
+
+			i {
+				width: 32px;
+				height: 32px;
+				background: #333;
+				border: 1px solid #333;
+				border-radius: 50%;
+
+				position: relative;
+
+				color: #FFF;
+				font-size: 16px;
+
+				&:before {
+					position: relative;
+					top: 25%;
+				}
+			}
+		}
+	}
+
+	&.reply {
+		.title-container {
+			display: none;
+		}
+	}
+
+	&.resizable.maximized {
+		.resizer {
+			top: 0 !important;
+			background: transparent;
+
+			.trigger {
+				height: $spacer * 0.5;
+
+				.handle {
+					border-top-left-radius: 0%;
+					border-top-right-radius: 0%;
+					border-bottom-left-radius: 50%;
+					border-bottom-right-radius: 50%;
+					border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+				}
+
+				i {
+					&:before {
+						content: fa-content($fa-var-chevron-down);
+					}
+				}
+			}
+		}
+	}
+
+	.draft-icon {
+		font-family: 'FontAwesome';
+		color: $success;
+		opacity: 0;
+
+		&::before {
+			content: fa-content($fa-var-save);
+		}
+
+		&.active {
+			animation: draft-saved 3s ease;
+		}
+	}
+
+	textarea {
+		resize: none;
+	}
+
+	.preview {
+		padding: $input-padding-y $input-padding-x;
+	}
+}
+
+.datetime-picker {
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+	min-width: 310px;
+	max-width: 310px;
+	margin: 0 auto;
+
+	input {
+		flex: 3;
+		line-height: inherit;
+	}
+
+	input + input {
+		border-left: none;
+		flex: 2;
+	}
+}
+
+.modal.topic-scheduler {
+	z-index: 1070;
+	& + .modal-backdrop {
+		z-index: 1060;
+	}
+}
+
+@keyframes draft-saved {
+	0%, 100% {
+		opacity: 0;
+	}
+
+	15% {
+		opacity: 1;
+	}
+
+	30% {
+		opacity: 0.5;
+	}
+
+	45% {
+		opacity: 1;
+	}
+
+	85% {
+		opacity: 1;
+	}
+}
+
+@keyframes pulse {
+	from {
+		transform: scale(1);
+		color: inherit;
+	}
+	50% {
+		transform: scale(.9);
+	}
+	to {
+		transform: scale(1);
+		color: #00adff;
+	}
+}
+
+@include media-breakpoint-down(lg) {
+	html.composing .composer { z-index: $zindex-modal; }
+}
+
+@include media-breakpoint-down(sm) {
+	html.composing {
+		.composer {
+			height: 100%;
+
+			.draft-icon {
+				position: absolute;
+				bottom: 1em;
+				right: 0em;
+
+				&::after {
+					top: 7px;
+				}
+			}
+
+			.preview-container {
+				max-width: initial;
+			}
+		}
+
+		body {
+			padding-bottom: 0 !important;
+		}
+	}
+}
+
+@include media-breakpoint-up(lg) {
+	html.composing {
+		.composer {
+			left: 15%;
+			width: 70%;
+			min-height: 400px;
+
+			.resizer {
+				display: block;
+			}
+
+			.minimize {
+				display: block;
+			}
+		}
+	}
+}
+
+@include media-breakpoint-up(md) {
+	// without this formatting elements that are dropdowns are not visible on desktop.
+	// on mobile dropdowns use bottom-sheet and overflow is auto
+	.formatting-group {
+		overflow: visible!important;
+	}
+}
+
+@import './zen-mode';
+@import './page-compose';
+@import './textcomplete';
+
+
+.skin-noskin, .skin-cosmo, .skin-flatly,
+.skin-journal, .skin-litera, .skin-minty, .skin-pulse,
+.skin-sandstone, .skin-sketchy, .skin-spacelab, .skin-united {
+	.composer {
+		color: var(--bs-secondary) !important;
+		background-color: var(--bs-light) !important;
+	}
+}
+
+.skin-cerulean, .skin-lumen, .skin-lux, .skin-morph,
+.skin-simplex, .skin-yeti, .skin-zephyr {
+	.composer {
+		color: var(--bs-body) !important;
+		background-color: var(--bs-light) !important;
+	}
+}
+
+@include color-mode(dark) {
+	.skin-noskin .composer {
+		color: var(--bs-secondary)!important;
+		background-color: var(--bs-body-bg)!important;
+	}
+}
