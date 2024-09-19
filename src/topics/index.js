@@ -69,6 +69,7 @@ Topics.getTopicsByTids = async function (tids, options) {
 
 	async function loadTopics() {
 		const topics = await Topics.getTopicsData(tids);
+		console.log(topics, 'topics');
 		const uids = _.uniq(topics.map(t => t && t.uid && t.uid.toString()).filter(v => utils.isNumber(v)));
 		const cids = _.uniq(topics.map(t => t && t.cid && t.cid.toString()).filter(v => utils.isNumber(v)));
 		const guestTopics = topics.filter(t => t && t.uid === 0);
@@ -104,6 +105,11 @@ Topics.getTopicsByTids = async function (tids, options) {
 			if (!userSettings[idx].showfullname) {
 				userObj.fullname = undefined;
 			}
+
+			// Make sure that the user thumbnail also shows as anonymous for anonymous topics
+			userObj.username = topics[idx].anonymous ? 'Anonymous': userObj.username;
+			userObj.picture = topics[idx].anonymous ? null : userObj.picture;
+			userObj['icon:text'] = topics[idx].anonymous ? 'A' : userObj['icon:text'];
 		});
 
 		return {
