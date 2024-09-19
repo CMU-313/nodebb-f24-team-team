@@ -11,7 +11,6 @@ const posts = require('../posts');
 const meta = require('../meta');
 const plugins = require('../plugins');
 const utils = require('../utils');
-const topics = require('../topics');
 
 
 const backlinkRegex = new RegExp(`(?:${nconf.get('url').replace('/', '\\/')}|\b|\\s)\\/topic\\/(\\d+)(?:\\/\\w+)?`, 'g');
@@ -132,7 +131,6 @@ module.exports = function (Topics) {
 		]);
 
 		postData.forEach((postObj, i) => {
-			console.log('postObj', i, postObj);
 			if (postObj) {
 				postObj.user = postObj.uid ? userData[postObj.uid] : { ...userData[postObj.uid] };
 				postObj.editor = postObj.editor ? editors[postObj.editor] : null;
@@ -143,14 +141,14 @@ module.exports = function (Topics) {
 				postObj.replies = replies[i];
 				postObj.selfPost = parseInt(uid, 10) > 0 && parseInt(uid, 10) === postObj.uid;
 				// If the current viewer is not the original poster and the post was made anonymous, do not show the user name
-				postObj.user.displayname = postObj.anonymous && (postObj.uid != uid) ? 'Anonymous' : postObj.user.displayname;
-				postObj.user.picture = postObj.anonymous && (postObj.uid != uid) ? null : postObj.user.picture;
-				postObj.user['icon:text'] = postObj.anonymous && (postObj.uid != uid) ? 'A' : postObj.user['icon:text'];
-		
+				postObj.user.userslug = postObj.anonymous && (postObj.uid !== uid) ? '' : postObj.user.userslug;
+				postObj.user.displayname = postObj.anonymous && (postObj.uid !== uid) ? 'Anonymous' : postObj.user.displayname;
+				postObj.user.picture = postObj.anonymous && (postObj.uid !== uid) ? null : postObj.user.picture;
+				postObj.user['icon:text'] = postObj.anonymous && (postObj.uid !== uid) ? 'A' : postObj.user['icon:text'];
 				// Username override for guests, if enabled
 				if (meta.config.allowGuestHandles && postObj.uid === 0 && postObj.handle) {
 					postObj.user.username = validator.escape(String(postObj.handle));
-					postObj.user.displayname = 'hi';
+					postObj.user.displayname = postObj.user.username;
 				}
 			}
 		});
