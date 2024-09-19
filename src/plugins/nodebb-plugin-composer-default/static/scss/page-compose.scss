@@ -1,0 +1,35 @@
+.page-compose .composer {
+	z-index: initial;
+	position: static;
+	[data-action="hide"] {
+		display: none;
+	}
+
+	@include media-breakpoint-down(md) {
+		.title-container {
+			flex-wrap: wrap;
+		}
+		.category-list-container {
+			[component="category-selector-selected"] > span {
+				display: inline!important;
+			}
+			width: 100%;
+		}
+	}
+}
+
+.zen-mode .page-compose .composer {
+	position: absolute;
+}
+.page-compose {
+	&.skin-noskin, &.skin-cosmo, &.skin-flatly,
+	&.skin-journal, &.skin-litera, &.skin-minty, &.skin-pulse,
+	&.skin-sandstone, &.skin-sketchy, &.skin-spacelab, &.skin-united,
+	&.skin-cerulean, &.skin-lumen, &.skin-lux, &.skin-morph,
+	&.skin-simplex, &.skin-yeti, &.skin-zephyr	{
+		.composer {
+			color: var(--bs-body-color) !important;
+			background-color: var(--bs-body-bg) !important;
+		}
+	}
+}
