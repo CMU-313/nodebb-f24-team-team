@@ -17,11 +17,18 @@ Topics.get = async (req, res) => {
 Topics.create = async (req, res) => {
 	const id = await lockPosting(req, '[[error:already-posting]]');
 	try {
-		const payload = await api.topics.create(req, req.body);
-		if (payload.queued) {
-			helpers.formatApiResponse(202, res, payload);
+		// Extract the anonymous flag from the request body
+		const payload = {
+			...req.body,
+			anonymous: !!req.body.anonymous, // Ensure it's a boolean
+		};
+
+		const result = await api.topics.create(req, payload);
+
+		if (result.queued) {
+			helpers.formatApiResponse(202, res, result);
 		} else {
-			helpers.formatApiResponse(200, res, payload);
+			helpers.formatApiResponse(200, res, result);
 		}
 	} finally {
 		await db.deleteObjectField('locks', id);
@@ -31,8 +38,16 @@ Topics.create = async (req, res) => {
 Topics.reply = async (req, res) => {
 	const id = await lockPosting(req, '[[error:already-posting]]');
 	try {
-		const payload = await api.topics.reply(req, { ...req.body, tid: req.params.tid });
-		helpers.formatApiResponse(200, res, payload);
+		// Extract the anonymous flag from the request body
+		const payload = {
+			...req.body,
+			tid: req.params.tid,
+			anonymous: !!req.body.anonymous, // Ensure it's a boolean
+		};
+
+		const result = await api.topics.reply(req, payload);
+
+		helpers.formatApiResponse(200, res, result);
 	} finally {
 		await db.deleteObjectField('locks', id);
 	}

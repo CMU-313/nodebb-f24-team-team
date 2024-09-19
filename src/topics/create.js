@@ -33,6 +33,7 @@ module.exports = function (Topics) {
 			lastposttime: 0,
 			postcount: 0,
 			viewcount: 0,
+			anonymous: data.anonymous,
 		};
 
 		if (Array.isArray(data.tags) && data.tags.length) {
@@ -123,6 +124,7 @@ module.exports = function (Topics) {
 		postData.tid = tid;
 		postData.ip = data.req ? data.req.ip : null;
 		postData.isMain = true;
+		postData.anonymous = data.anonymous;
 		postData = await posts.create(postData);
 		postData = await onNewPost(postData, data);
 
@@ -231,12 +233,11 @@ module.exports = function (Topics) {
 			topicInfo,
 		] = await Promise.all([
 			posts.getUserInfoForPosts([postData.uid], uid),
-			Topics.getTopicFields(tid, ['tid', 'uid', 'title', 'slug', 'cid', 'postcount', 'mainPid', 'scheduled', 'tags']),
+			Topics.getTopicFields(tid, ['tid', 'uid', 'title', 'slug', 'cid', 'postcount', 'mainPid', 'scheduled', 'tags', 'anonymous']),
 			Topics.addParentPosts([postData]),
 			Topics.syncBacklinks(postData),
 			posts.parsePost(postData),
 		]);
-
 		postData.user = userInfo[0];
 		postData.topic = topicInfo;
 		postData.index = topicInfo.postcount - 1;

@@ -104,6 +104,11 @@ Topics.getTopicsByTids = async function (tids, options) {
 			if (!userSettings[idx].showfullname) {
 				userObj.fullname = undefined;
 			}
+
+			// Make sure that the user thumbnail also shows as anonymous for anonymous topics
+			userObj.username = topics[idx].anonymous ? 'Anonymous' : userObj.username;
+			userObj.picture = topics[idx].anonymous ? null : userObj.picture;
+			userObj['icon:text'] = topics[idx].anonymous ? 'A' : userObj['icon:text'];
 		});
 
 		return {
