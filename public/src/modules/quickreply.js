@@ -1,5 +1,7 @@
 'use strict';
 
+console.log("Hello from quickreply.js");
+
 define('quickreply', [
 	'components', 'composer', 'composer/autocomplete', 'api',
 	'alerts', 'uploadHelpers', 'mousetrap', 'storage', 'hooks',
@@ -94,6 +96,55 @@ define('quickreply', [
 				hooks.fire('action:quickreply.success', { data });
 			});
 		});
+
+		ready = true;
+		components.get('topic/quickreply/button1').on('click', function (e) {
+			e.preventDefault();
+			if (!ready) {
+				return;
+			}
+
+			console.log("hello there!");
+
+			const replyMsg = components.get('topic/quickreply/text').val();
+			const replyData = {
+				tid: ajaxify.data.tid,
+				handle: undefined,
+				content: replyMsg,
+			};
+			const replyLen = replyMsg.length;
+			if (replyLen < parseInt(config.minimumPostLength, 10)) {
+				return alerts.error('[[error:content-too-short, ' + config.minimumPostLength + ']]');
+			} else if (replyLen > parseInt(config.maximumPostLength, 10)) {
+				return alerts.error('[[error:content-too-long, ' + config.maximumPostLength + ']]');
+			}
+
+			ready = false;
+			api.post(`/topics/${ajaxify.data.tid}`, replyData, function (err, data) {
+				ready = true;
+				if (err) {
+					return alerts.error(err);
+				}
+				if (data && data.queued) {
+					alerts.alert({
+						type: 'success',
+						title: '[[global:alert.success]]',
+						message: data.message,
+						timeout: 10000,
+						clickfn: function () {
+							ajaxify.go(`/post-queue/${data.id}`);
+						},
+					});
+				}
+
+				components.get('topic/quickreply/text').val('');
+				storage.removeItem(qrDraftId);
+				autocomplete._active.core_qr.hide();
+				hooks.fire('action:quickreply.success', { data });
+			});
+		});
+
+				
 
 		const draft = storage.getItem(qrDraftId);
 		if (draft) {
