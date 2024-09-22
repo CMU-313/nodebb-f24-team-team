@@ -738,6 +738,7 @@ define('composer', [
 				content: bodyEl.val(),
 				toPid: postData.toPid,
 			};
+			if (anonymous) composerData.anonymous = true;
 		} else if (action === 'posts.edit') {
 			method = 'put';
 			route = `/posts/${postData.pid}`;

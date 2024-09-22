@@ -125,6 +125,30 @@ define('forum/topic/postTools', [
 			});
 		});
 
+		postContainer.on('click', '.composer-submit-anonymous', function (e) {
+			e.preventDefault();
+			e.stopPropagation();	// Other click events bring composer back to active state which is undesired on submit
+
+			$(this).attr('disabled', true);
+			post(post_uuid, true);
+		});
+
+		$(".topic").on(
+			"click",
+			'[component="topic/reply-anonymously"]',
+			function () {
+				translator.translate(
+					`[[topic:link-back, ${ajaxify.data.titleRaw}, ${config.relative_path}/topic/${ajaxify.data.slug}]]`,
+					function (body) {
+						hooks.fire("action:composer.topic.new", {
+							cid: ajaxify.data.cid,
+							body: body,
+						});
+					}
+				);
+			}
+		);
+
 		postContainer.on('click', '[component="post/bookmark"]', function () {
 			return bookmarkPost($(this), getData($(this), 'data-pid'));
 		});
