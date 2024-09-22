@@ -140,20 +140,20 @@ module.exports = function (Topics) {
 				postObj.votes = postObj.votes || 0;
 				postObj.replies = replies[i];
 				postObj.selfPost = parseInt(uid, 10) > 0 && parseInt(uid, 10) === postObj.uid;
-	
+
 				// Check for anonymous posts and modify username accordingly
 				if (postObj.anonymous && postObj.uid === uid) {
 					postObj.user.displayname += ' (anonymous)';
 					postObj.user.userslug = ''; // Clear the userslug for anonymous display
 					postObj.user.picture = null; // Remove the user picture
-					postObj.user['icon:text'] = 'A'; 
+					postObj.user['icon:text'] = 'A';
 				} else if (postObj.anonymous && postObj.uid !== uid) {
 					postObj.user.displayname = 'Anonymous';
 					postObj.user.userslug = '';
 					postObj.user.picture = null;
 					postObj.user['icon:text'] = 'A';
 				}
-	
+
 				// Username override for guests, if enabled
 				if (meta.config.allowGuestHandles && postObj.uid === 0 && postObj.handle) {
 					postObj.user.username = validator.escape(String(postObj.handle));
