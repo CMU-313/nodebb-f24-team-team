@@ -106,9 +106,10 @@ Topics.getTopicsByTids = async function (tids, options) {
 			}
 
 			// Make sure that the user thumbnail also shows as anonymous for anonymous topics
-			userObj.username = topics[idx].anonymous ? 'Anonymous' : userObj.username;
-			userObj.picture = topics[idx].anonymous ? null : userObj.picture;
-			userObj['icon:text'] = topics[idx].anonymous ? 'A' : userObj['icon:text'];
+			userObj.userslug = topics[idx].anonymous == true ? '' : userObj.username;
+			userObj.username = topics[idx].anonymous == true ? 'Anonymous' : userObj.username;
+			userObj.picture = topics[idx].anonymous == true ? null : userObj.picture;
+			userObj['icon:text'] = topics[idx].anonymous == true ? 'A' : userObj['icon:text'];
 		});
 
 		return {
@@ -127,7 +128,7 @@ Topics.getTopicsByTids = async function (tids, options) {
 		Topics.getFollowData(tids, uid),
 		Topics.getUserBookmarks(tids, uid),
 		user.getSettings(uid),
-	]);
+	])
 
 	const sortNewToOld = callerSettings.topicPostSort === 'newest_to_oldest';
 	result.topics.forEach((topic, i) => {
