@@ -144,9 +144,6 @@ module.exports = function (Topics) {
 				// Check for anonymous posts and modify username accordingly
 				if (postObj.anonymous && postObj.uid === uid) {
 					postObj.user.displayname += ' (anonymous)';
-					postObj.user.userslug = ''; // Clear the userslug for anonymous display
-					postObj.user.picture = null; // Remove the user picture
-					postObj.user['icon:text'] = 'A';
 				} else if (postObj.anonymous && postObj.uid !== uid) {
 					postObj.user.displayname = 'Anonymous';
 					postObj.user.userslug = '';

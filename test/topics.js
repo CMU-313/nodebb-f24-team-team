@@ -275,6 +275,20 @@ describe('Topic\'s', () => {
 			});
 		});
 
+		it('should create a new anonymous reply with proper parameters', (done) => {
+			topics.reply({
+				uid: topic.userId,
+				content: 'test post', 
+				tid: newTopic.tid,
+				anonymous: true
+			}, (err, result) => {
+				assert.ifError(err);
+				assert(result);
+				assert(result.anonymous);
+				done();
+			});
+		});
+
 		it('should create a new reply with proper parameters', (done) => {
 			topics.reply({ uid: topic.userId, content: 'test post', tid: newTopic.tid }, (err, result) => {
 				assert.equal(err, null, 'was created with error');
@@ -1992,9 +2006,11 @@ describe('Topic\'s', () => {
 	describe('teasers', () => {
 		let topic1;
 		let topic2;
+		let topic3;
 		before(async () => {
 			topic1 = await topics.post({ uid: adminUid, title: 'topic 1', content: 'content 1', cid: categoryObj.cid });
 			topic2 = await topics.post({ uid: adminUid, title: 'topic 2', content: 'content 2', cid: categoryObj.cid });
+			topic3 = await topics.post({ uid: adminUid, title: 'topic 3', content: 'content 3', cid: categoryObj.cid, anonymous: true });
 		});
 
 		after((done) => {
