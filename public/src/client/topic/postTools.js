@@ -125,13 +125,12 @@ define('forum/topic/postTools', [
 			});
 		});
 
-		postContainer.on('click', '.composer-submit-anonymous', function (e) {
-			e.preventDefault();
-			e.stopPropagation();	// Other click events bring composer back to active state which is undesired on submit
+		// postContainer.on('click', '.composer-submit-anonymous', function (e) {
+		// 	e.preventDefault();
+		// 	e.stopPropagation();	// Other click events bring composer back to active state which is undesired on submit
 
-			$(this).attr('disabled', true);
-			post(post_uuid, true);
-		});
+		// 	$(this).attr('disabled', true);
+		// });
 
 		$(".topic").on(
 			"click",
