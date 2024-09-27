@@ -117,12 +117,12 @@ Topics.getTopicsByTids = async function (tids, options) {
 	}
 
 	const [result, hasRead, followData, bookmarks, callerSettings] = await Promise.all([
-		loadTopics(uid),
+		loadTopics(),
 		Topics.hasReadTopics(tids, uid),
 		Topics.getFollowData(tids, uid),
 		Topics.getUserBookmarks(tids, uid),
 		user.getSettings(uid),
-	])
+	]);
 
 	const sortNewToOld = callerSettings.topicPostSort === 'newest_to_oldest';
 	result.topics.forEach((topic, i) => {

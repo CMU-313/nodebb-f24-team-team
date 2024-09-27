@@ -2006,11 +2006,9 @@ describe('Topic\'s', () => {
 	describe('teasers', () => {
 		let topic1;
 		let topic2;
-		let topic3;
 		before(async () => {
 			topic1 = await topics.post({ uid: adminUid, title: 'topic 1', content: 'content 1', cid: categoryObj.cid });
 			topic2 = await topics.post({ uid: adminUid, title: 'topic 2', content: 'content 2', cid: categoryObj.cid });
-			topic3 = await topics.post({ uid: adminUid, title: 'topic 3', content: 'content 3', cid: categoryObj.cid, anonymous: true });
 		});
 
 		after((done) => {

@@ -328,7 +328,7 @@ const utils = {
 	},
 
 	isUserNameValid: function (name) {
-		return (name && name !== '' && (/^['" \-+.*[\]0-9\u00BF-\u1FFF\u2C00-\uD7FF\w]+$/.test(name)));
+		return (name && name !== '' && name.toLowerCase() !== 'anonymous' && (/^['" \-+.*[\]0-9\u00BF-\u1FFF\u2C00-\uD7FF\w]+$/.test(name)));
 	},
 
 	isPasswordValid: function (password) {
