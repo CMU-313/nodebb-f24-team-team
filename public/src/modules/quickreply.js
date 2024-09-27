@@ -1,6 +1,6 @@
 'use strict';
 
-console.log("Hello from quickreply.js");
+console.log('Hello from quickreply.js');
 
 define('quickreply', [
 	'components', 'composer', 'composer/autocomplete', 'api',
@@ -104,7 +104,7 @@ define('quickreply', [
 				return;
 			}
 
-			console.log("hello there!");
+			console.log('hello there!');
 
 			const replyMsg = components.get('topic/quickreply/text').val();
 			const replyData = {
@@ -144,7 +144,7 @@ define('quickreply', [
 			});
 		});
 
-				
+
 
 		const draft = storage.getItem(qrDraftId);
 		if (draft) {

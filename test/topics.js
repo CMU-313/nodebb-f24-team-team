@@ -278,9 +278,9 @@ describe('Topic\'s', () => {
 		it('should create a new anonymous reply with proper parameters', (done) => {
 			topics.reply({
 				uid: topic.userId,
-				content: 'test post', 
+				content: 'test post',
 				tid: newTopic.tid,
-				anonymous: true
+				anonymous: true,
 			}, (err, result) => {
 				assert.ifError(err);
 				assert(result);

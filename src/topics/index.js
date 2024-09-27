@@ -134,13 +134,13 @@ Topics.getTopicsByTids = async function (tids, options) {
 				topic.user.username = validator.escape(result.tidToGuestHandle[topic.tid]);
 				topic.user.displayname = topic.user.username;
 			}
-			if(topic.anonymous && topic.uid !== uid) {
+			if (topic.anonymous && topic.uid !== uid) {
 				topic.user.userslug = '';
-				topic.user.username ='Anonymous';
+				topic.user.username = 'Anonymous';
 				topic.user.picture = null;
 				topic.user['icon:text'] = 'A';
 			}
-			topic.teaser = topic.anonymous == true ? null : result.teasers[i] || null;
+			topic.teaser = topic.anonymous === true ? null : result.teasers[i] || null;
 			topic.isOwner = topic.uid === parseInt(uid, 10);
 			topic.ignored = followData[i].ignoring;
 			topic.followed = followData[i].following;
