@@ -96,7 +96,6 @@ define('quickreply', [
 			});
 		});
 
-		// ANON QUICK REPLY BUTTON HANDLING
 		ready = true;
 		components.get('topic/quickreply/button1').on('click', function (e) {
 			e.preventDefault();
