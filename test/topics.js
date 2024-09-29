@@ -77,6 +77,22 @@ describe('Topic\'s', () => {
 			});
 		});
 
+		it('should create a new anonymous topic with proper parameters', (done) => {
+			topics.post({
+				uid: topic.userId,
+				title: topic.title,
+				content: topic.content,
+				cid: topic.categoryId,
+				anonymous: true,
+			}, (err, result) => {
+				assert.ifError(err);
+				assert(result);
+				topic.tid = result.topicData.tid;
+				assert(result.topicData.anonymous);
+				done();
+			});
+		});
+
 		it('should get post count', async () => {
 			const count = await socketTopics.postcount({ uid: adminUid }, topic.tid);
 			assert.strictEqual(count, 1);
@@ -255,6 +271,20 @@ describe('Topic\'s', () => {
 
 				newTopic = result.topicData;
 				newPost = result.postData;
+				done();
+			});
+		});
+
+		it('should create a new anonymous reply with proper parameters', (done) => {
+			topics.reply({
+				uid: topic.userId,
+				content: 'test post',
+				tid: newTopic.tid,
+				anonymous: true,
+			}, (err, result) => {
+				assert.ifError(err);
+				assert(result);
+				assert(result.anonymous);
 				done();
 			});
 		});
