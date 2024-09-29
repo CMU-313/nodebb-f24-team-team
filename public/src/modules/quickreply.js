@@ -1,5 +1,7 @@
 'use strict';
 
+console.log("Hello from quickreply.js");
+
 define('quickreply', [
 	'components', 'composer', 'composer/autocomplete', 'api',
 	'alerts', 'uploadHelpers', 'mousetrap', 'storage', 'hooks',
@@ -20,7 +22,6 @@ define('quickreply', [
 					'z-index': 100,
 				},
 			},
-			anonymous: false,
 		};
 
 		destroyAutoComplete();
@@ -96,16 +97,14 @@ define('quickreply', [
 			});
 		});
 
-		// ANON QUICK REPLY BUTTON HANDLING
 		ready = true;
 		components.get('topic/quickreply/button1').on('click', function (e) {
 			e.preventDefault();
-			console.log(1000);
 			if (!ready) {
 				return;
 			}
 
-			data.anonymous = true;
+			console.log("hello there!");
 
 			const replyMsg = components.get('topic/quickreply/text').val();
 			const replyData = {
@@ -144,6 +143,8 @@ define('quickreply', [
 				hooks.fire('action:quickreply.success', { data });
 			});
 		});
+
+				
 
 		const draft = storage.getItem(qrDraftId);
 		if (draft) {
