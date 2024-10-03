@@ -103,7 +103,7 @@ define('quickreply', [
 			if (!ready) {
 				return;
 			}
-      data.anonymous = true;
+      			data.anonymous = true;
 
 			const replyMsg = components.get('topic/quickreply/text').val();
 			const replyData = {
