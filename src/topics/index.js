@@ -104,11 +104,6 @@ Topics.getTopicsByTids = async function (tids, options) {
 			if (!userSettings[idx].showfullname) {
 				userObj.fullname = undefined;
 			}
-
-			// Make sure that the user thumbnail also shows as anonymous for anonymous topics
-			userObj.username = topics[idx].anonymous ? 'Anonymous' : userObj.username;
-			userObj.picture = topics[idx].anonymous ? null : userObj.picture;
-			userObj['icon:text'] = topics[idx].anonymous ? 'A' : userObj['icon:text'];
 		});
 
 		return {
@@ -139,7 +134,13 @@ Topics.getTopicsByTids = async function (tids, options) {
 				topic.user.username = validator.escape(result.tidToGuestHandle[topic.tid]);
 				topic.user.displayname = topic.user.username;
 			}
-			topic.teaser = result.teasers[i] || null;
+			if (topic.anonymous && topic.uid !== uid) {
+				topic.user.userslug = '';
+				topic.user.username = 'Anonymous';
+				topic.user.picture = null;
+				topic.user['icon:text'] = 'A';
+			}
+			topic.teaser = topic.anonymous === true ? null : result.teasers[i] || null;
 			topic.isOwner = topic.uid === parseInt(uid, 10);
 			topic.ignored = followData[i].ignoring;
 			topic.followed = followData[i].following;

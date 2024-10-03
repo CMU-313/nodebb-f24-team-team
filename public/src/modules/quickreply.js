@@ -103,8 +103,7 @@ define('quickreply', [
 			if (!ready) {
 				return;
 			}
-
-			data.anonymous = true;
+      data.anonymous = true;
 
 			const replyMsg = components.get('topic/quickreply/text').val();
 			const replyData = {
@@ -143,6 +142,7 @@ define('quickreply', [
 				hooks.fire('action:quickreply.success', { data });
 			});
 		});
+
 
 		const draft = storage.getItem(qrDraftId);
 		if (draft) {
