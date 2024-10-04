@@ -134,11 +134,17 @@ Topics.getTopicsByTids = async function (tids, options) {
 				topic.user.username = validator.escape(result.tidToGuestHandle[topic.tid]);
 				topic.user.displayname = topic.user.username;
 			}
-			if (topic.anonymous && topic.uid !== uid) {
-				topic.user.userslug = '';
-				topic.user.username = 'Anonymous';
-				topic.user.picture = null;
-				topic.user['icon:text'] = 'A';
+
+			if (topic.anonymous === 'true' && topic.uid !== uid) {
+				const user = {
+					...topic.user,
+					userslug: '',
+					username: 'Anonymous',
+					picture: null,
+					'icon:text': 'A',
+					'icon:bgColor': topic.user['icon:bgColor'],
+				};
+				topic.user = user;
 			}
 			topic.teaser = topic.anonymous === true ? null : result.teasers[i] || null;
 			topic.isOwner = topic.uid === parseInt(uid, 10);
