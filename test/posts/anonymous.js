@@ -104,7 +104,7 @@ describe('User Registration Validation with "anonymous" in the username', () => 
 			await User.create({ username: 'anonymous', password: 'password123', picture: 'some-picture-url' });
 			assert.fail('User creation should have failed with the username "anonymous"');
 		} catch (err) {
-			assert.strictEqual(err.message, 'Invalid username');
+			assert.strictEqual(err.message, '[[error:invalid-username, anonymous]]');
 		}
 	});
 
@@ -113,7 +113,7 @@ describe('User Registration Validation with "anonymous" in the username', () => 
 			await User.create({ username: 'useranonymous', password: 'password123', picture: 'some-picture-url' });
 			assert.fail('User creation should have failed with a username containing "anonymous"');
 		} catch (err) {
-			assert.strictEqual(err.message, 'Invalid username');
+			assert.strictEqual(err.message, '[[error:invalid-username, useranonymous]]');
 		}
 	});
 
