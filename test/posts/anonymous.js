@@ -121,7 +121,7 @@ describe('User Registration Validation with "anonymous" in the username', () => 
 		const validUsername = 'validUser123';
 		const userUid = await User.create({ username: validUsername, password: 'securePass!@#', picture: 'valid-picture-url' });
 		assert.ok(userUid, 'User should have been created successfully');
-		const user = await User.get(userUid);
-		assert.strictEqual(user.username, validUsername);
+		const usernames = await User.getUsernamesByUids([userUid]);
+		assert.strictEqual(usernames[0], validUsername);
 	});
 });
