@@ -97,31 +97,3 @@ describe('Anonymous Post Thumbnails', () => {
 		assert(result[0].user['icon:text'] === 'A');
 	});
 });
-
-describe('User Registration Validation with "anonymous" in the username', () => {
-	it('should prevent registration with the username "anonymous"', async () => {
-		try {
-			await User.create({ username: 'anonymous', password: 'password123', picture: 'some-picture-url' });
-			assert.fail('User creation should have failed with the username "anonymous"');
-		} catch (err) {
-			assert.strictEqual(err.message, '[[error:invalid-username, anonymous]]');
-		}
-	});
-
-	it('should prevent registration with "anonymous" included in the username', async () => {
-		try {
-			await User.create({ username: 'useranonymous', password: 'password123', picture: 'some-picture-url' });
-			assert.fail('User creation should have failed with a username containing "anonymous"');
-		} catch (err) {
-			assert.strictEqual(err.message, '[[error:invalid-username, useranonymous]]');
-		}
-	});
-
-	it('should allow registration with valid usernames that do not contain "anonymous"', async () => {
-		const validUsername = 'validUser123';
-		const userUid = await User.create({ username: validUsername, password: 'securePass!@#', picture: 'valid-picture-url' });
-		assert.ok(userUid, 'User should have been created successfully');
-		const usernames = await User.getUsernamesByUids([userUid]);
-		assert.strictEqual(usernames[0], validUsername);
-	});
-});

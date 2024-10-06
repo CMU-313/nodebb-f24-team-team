@@ -643,12 +643,12 @@ describe('Admin Controllers', () => {
 				for (const route of adminRoutes) {
 					/* eslint-disable no-await-in-loop */
 					await privileges.admin.rescind([privileges.admin.routeMap[route]], uid);
-					const { response: res } = await request.get(`${nconf.get('url')}/api/admin/${route}`, requestOpts);
+					let { response: res } = await request.get(`${nconf.get('url')}/api/admin/${route}`, requestOpts);
 					assert.strictEqual(res.statusCode, 403);
 
-					// await privileges.admin.give([privileges.admin.routeMap[route]], uid);
-					// ({ response: res } = await request.get(`${nconf.get('url')}/api/admin/${route}`, requestOpts));
-					// assert.strictEqual(res.statusCode, 200);
+					await privileges.admin.give([privileges.admin.routeMap[route]], uid);
+					({ response: res } = await request.get(`${nconf.get('url')}/api/admin/${route}`, requestOpts));
+					assert.strictEqual(res.statusCode, 200);
 
 					await privileges.admin.rescind([privileges.admin.routeMap[route]], uid);
 				}
