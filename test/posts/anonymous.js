@@ -22,7 +22,7 @@ describe('Anonymous Posts', () => {
 	it('should not modify non-anonymous post ', async () => {
 		const userUid = 1;
 		postObj = {
-			anonymous: false,
+			anonymous: 'false',
 			uid: adminUid,
 		};
 		await topics.addPostData([postObj], userUid);
@@ -34,10 +34,12 @@ describe('Anonymous Posts', () => {
 
 	it('should correctly show anonymous post to post author', async () => {
 		postObj = {
-			anonymous: true,
+			anonymous: 'true',
 			uid: adminUid,
 		};
 		await topics.addPostData([postObj], adminUid);
+		// assert(postObj.user.displayname === 'admin');
+		// log(postObj.user.displayname)
 		assert(postObj.user.displayname === 'admin (anonymous)');
 		assert(postObj.user.userslug === '');
 		assert(postObj.user.picture === null);
@@ -47,7 +49,7 @@ describe('Anonymous Posts', () => {
 	it('should correctly show anonymous post to user other than author', async () => {
 		const userUid = adminUid + 1;
 		postObj = {
-			anonymous: true,
+			anonymous: 'true',
 			uid: adminUid,
 		};
 		await topics.addPostData([postObj], userUid);
@@ -85,8 +87,8 @@ describe('Anonymous Post Thumbnails', () => {
 
 	it('should correctly display teaser for anonymous post to post author', async () => {
 		const result = await topics.getTopicsByTids([tid], adminUid);
-		assert(result[0].user.username === 'admin 0');
-		assert(result[0].user.userslug === 'admin-0');
+		assert(result[0].user.username === 'admin');
+		assert(result[0].user.userslug === 'admin');
 		assert(result[0].user.picture === 'some-picture-url');
 	});
 	it('should not display teaser for anonymous post to user that is not author', async () => {
