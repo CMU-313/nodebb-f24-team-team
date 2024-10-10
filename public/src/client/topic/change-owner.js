@@ -23,6 +23,7 @@ define('forum/topic/change-owner', [
 			$('body').append(modal);
 
 			modal.find('#change_owner_cancel').on('click', closeModal);
+			modal.find('#deanonymize').on('click', () => deanonymize(postEl.attr('data-uid')));
 			modal.find('#username').on('keyup', checkButtonEnable);
 			postSelect.init(onPostToggled, {
 				allowMainPostSelect: true,
@@ -44,6 +45,12 @@ define('forum/topic/change-owner', [
 		});
 	};
 
+	async function deanonymize(uid) {
+		// setup functionality in future for deanonymizing a post
+
+		closeModal()
+	}
+	
 	function showPostsSelected() {
 		if (postSelect.pids.length) {
 			modal.find('#pids').translateHtml('[[topic:fork-pid-count, ' + postSelect.pids.length + ']]');
