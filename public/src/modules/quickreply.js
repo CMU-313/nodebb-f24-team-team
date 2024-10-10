@@ -104,14 +104,14 @@ define('quickreply', [
 				return;
 			}
 
-			console.log('hello there!');
-
 			const replyMsg = components.get('topic/quickreply/text').val();
 			const replyData = {
 				tid: ajaxify.data.tid,
 				handle: undefined,
 				content: replyMsg,
 			};
+			data.anonymous = true;
+
 			const replyLen = replyMsg.length;
 			if (replyLen < parseInt(config.minimumPostLength, 10)) {
 				return alerts.error('[[error:content-too-short, ' + config.minimumPostLength + ']]');
