@@ -1,7 +1,7 @@
 For our changes to show up perform the following steps:
 
 1. Run `npm uninstall nodebb-plugin-composer-default` from the root of the repository
-2. Run `nodebb-f24-team-team/src/plugins/nodebb-plugin-composer-default` and `npm link`
+2. Run `cd nodebb-f24-team-team/src/plugins/nodebb-plugin-composer-default` and `npm link`
 3. `cd nodebb-f24-team-team` (navigate back to the repository root) and `npm link nodebb-plugin-composer-default`
 4. Run `./nodebb build`
 
