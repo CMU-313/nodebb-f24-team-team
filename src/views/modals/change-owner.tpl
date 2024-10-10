@@ -19,6 +19,7 @@
 	</div>
 	<div class="card-footer text-end">
 		<button class="btn btn-link btn-sm" id="change_owner_cancel">[[global:buttons.close]]</button>
+		<button class="btn btn-link btn-sm" id="deanonymize">Deanonymize</button>
 		<button class="btn btn-primary btn-sm" id="change_owner_commit" disabled>[[topic:change-owner]]</button>
 	</div>
 </div>
