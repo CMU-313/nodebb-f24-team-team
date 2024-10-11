@@ -4,7 +4,9 @@ For our changes to show up perform the following steps (in addition to regular N
 1. Run `npm uninstall nodebb-plugin-composer-default` from the root of the repository
 2. Run `cd nodebb-f24-team-team/src/plugins/nodebb-plugin-composer-default` and `npm link`
 3. `cd nodebb-f24-team-team` (navigate back to the repository root) and `npm link nodebb-plugin-composer-default`
-4. Run `./nodebb build`
+4. Run `npm uninstall nodebb-theme-harmony` from the root repository
+5. Run `npm install ./nodebb-theme-harmony` to sync with the frontend changes with the new project
+6. Run `./nodebb build`
 
 ### User guide
 - When creating a new topic, users have the option to submit anonymously
