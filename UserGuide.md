@@ -27,6 +27,9 @@ a frontend button that has an event listener set up for the future, but currentl
 
 <img width="927" alt="Deanonymize button" src="https://github.com/user-attachments/assets/7ef8c80d-9c05-41de-92d8-510db6a0a8e3">
 
+- Users can also reply to posts anonymously using the `Reply Anonymously` button instead of the `Quick Reply` button
+  ![image](https://github.com/user-attachments/assets/b68bfcb3-64a5-49cf-b6f0-6e29d3f6a385)
+
 ### Testing
 
 Our backend tests can be found in the file [`tests/posts/anonymous.js`](https://github.com/CMU-313/nodebb-f24-team-team/blob/f24/test/posts/anonymous.js). In this file, we validate our two primary backend changes. 
