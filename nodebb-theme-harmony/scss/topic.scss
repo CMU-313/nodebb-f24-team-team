@@ -1,0 +1,139 @@
+body.template-topic {
+	.breadcrumb .breadcrumb-item:last-child {
+		display: none;
+	}
+	.topic {
+		.posts-container {
+			max-width: 960px;
+			width: 960px;
+		}
+
+		.posts {
+			// fixes code blocks pushing content out on mobile
+			@include media-breakpoint-down(md) {
+				max-width: calc(100vw - $grid-gutter-width);
+			}
+
+			&.timeline {
+				@include timeline-style;
+			}
+
+			.post-header {
+				font-size: 0.8125rem;
+				line-height: 1.25rem;
+
+				.bookmarked {
+					transition: $transition-fade;
+				}
+			}
+
+			> [component="post"] > [component="post/footer"] {
+				margin-left: calc($spacer * 2.5);
+			}
+
+			[component="post"] {
+				&.selected .post-container {
+					background-color: mix($body-bg, $body-color, 90%);
+				}
+				&.deleted .post-container .content { opacity: .65; }
+
+				[component="post/content"] {
+					@include fix-lists();
+
+					> blockquote {
+						> blockquote {
+							> *:not(.blockquote) {
+								display: none;
+							}
+						}
+
+						> blockquote.uncollapsed {
+							> *:not(.blockquote) {
+								display: block;
+							}
+						}
+					}
+
+					@include media-breakpoint-up(lg) {
+						table { // text-break breaks table formatting
+						 	word-break:initial!important;
+						}
+					}
+				}
+			}
+
+			[component="post/upvote"], [component="post/downvote"] {
+				&.upvoted, &.downvoted {
+					background-color: var(--btn-ghost-active-color);
+
+					&:hover {
+						background-color: var(--btn-ghost-hover-color);
+					}
+				}
+			}
+		}
+	}
+
+	.quick-reply {
+		@include topic-avatars();
+	}
+
+	[component="post/replies/container"] {
+		.icon {
+			display: none !important;
+		}
+
+		.post-header .icon {
+			display: initial !important;
+
+			.status {
+				display: none;
+			}
+		}
+
+		.timeline-event {
+			display: none !important;
+		}
+
+		[component="post"] {
+			padding-top: 0 !important;
+			padding-bottom: $spacer;
+			&:last-of-type {
+				padding-bottom: 0;
+				.post-footer {
+					border-bottom: none !important;
+				}
+			}
+		}
+	}
+
+
+	[component="topic/thumb/list"] {
+		height: calc($font-size-base * 4);
+	}
+}
+
+@include media-breakpoint-up(sm) {
+	body.template-topic {
+		.topic .posts {
+			[component="post"] {
+				[component="post/actions"] {
+					opacity: 0;
+					transition: $transition-fade;
+
+					&:has([aria-expanded="true"]) {
+						opacity: 1;
+					}
+				}
+				[component="post/actions"]:focus-within {
+					opacity: 1;
+				}
+				&:hover {
+					> .post-footer > [component="post/actions"] {
+						opacity: 1;
+					}
+				}
+			}
+		}
+	}
+}

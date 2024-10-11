@@ -58,7 +58,43 @@ describe('Anonymous Posts', () => {
 		assert(postObj.user.picture === null);
 		assert(postObj.user['icon:text'] === 'A');
 	});
+
+	it('should correctly show anonymous post to user other than author when doing reply anonymously', async () => {
+		const userUid = adminUid + 1;
+		postObj = {
+			anonymous: true,
+			uid: adminUid,
+		};
+		await topics.addPostData([postObj], userUid);
+		assert(postObj.user.displayname === 'Anonymous');
+		assert(postObj.user.userslug === '');
+		assert(postObj.user.picture === null);
+		assert(postObj.user['icon:text'] === 'A');
+	});
 });
+
+describe('Anonymous Replies', () => {
+	let postObj;
+	let adminUid;
+	it('should correctly show anonymous reply to post author', async () => {
+		const userUid = 1;
+		postObj = {
+			anonymous: true,
+			uid: adminUid,
+		};
+		await topics.addPostData([postObj], userUid);
+	});
+
+	it('should correctly show anonymous reply to user other than author', async () => {
+		const userUid = adminUid + 1;
+		postObj = {
+			anonymous: true,
+			uid: adminUid,
+		};
+		await topics.addPostData([postObj], userUid);
+	});
+});
+
 
 describe('Anonymous Post Thumbnails', () => {
 	let topic;
