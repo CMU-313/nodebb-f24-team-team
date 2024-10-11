@@ -22,7 +22,7 @@ describe('Anonymous Posts', () => {
 	it('should not modify non-anonymous post ', async () => {
 		const userUid = 1;
 		postObj = {
-			anonymous: false,
+			anonymous: 'false',
 			uid: adminUid,
 		};
 		await topics.addPostData([postObj], userUid);
@@ -34,10 +34,12 @@ describe('Anonymous Posts', () => {
 
 	it('should correctly show anonymous post to post author', async () => {
 		postObj = {
-			anonymous: true,
+			anonymous: 'true',
 			uid: adminUid,
 		};
 		await topics.addPostData([postObj], adminUid);
+		// assert(postObj.user.displayname === 'admin');
+		// log(postObj.user.displayname)
 		assert(postObj.user.displayname === 'admin (anonymous)');
 		assert(postObj.user.userslug === '');
 		assert(postObj.user.picture === null);
@@ -47,7 +49,7 @@ describe('Anonymous Posts', () => {
 	it('should correctly show anonymous post to user other than author', async () => {
 		const userUid = adminUid + 1;
 		postObj = {
-			anonymous: true,
+			anonymous: 'true',
 			uid: adminUid,
 		};
 		await topics.addPostData([postObj], userUid);
@@ -60,7 +62,7 @@ describe('Anonymous Posts', () => {
 	it('should correctly show anonymous post to user other than author when doing reply anonymously', async () => {
 		const userUid = adminUid + 1;
 		postObj = {
-			anonymous: true,
+			anonymous: 'true',
 			uid: adminUid,
 		};
 		await topics.addPostData([postObj], userUid);
@@ -77,7 +79,7 @@ describe('Anonymous Replies', () => {
 	it('should correctly show anonymous reply to post author', async () => {
 		const userUid = 1;
 		postObj = {
-			anonymous: true,
+			anonymous: 'true',
 			uid: adminUid,
 		};
 		await topics.addPostData([postObj], userUid);
@@ -86,7 +88,7 @@ describe('Anonymous Replies', () => {
 	it('should correctly show anonymous reply to user other than author', async () => {
 		const userUid = adminUid + 1;
 		postObj = {
-			anonymous: true,
+			anonymous: 'true',
 			uid: adminUid,
 		};
 		await topics.addPostData([postObj], userUid);
@@ -111,7 +113,7 @@ describe('Anonymous Post Thumbnails', () => {
 		topic = await (
 			topics.post({
 				uid: adminUid,
-				anonymous: true,
+				anonymous: 'true',
 				cid: category.cid,
 				title: 'Test Topic Title',
 				content: 'The content of test topic',
