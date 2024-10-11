@@ -87,7 +87,7 @@ describe('Anonymous Post Thumbnails', () => {
 
 	it('should correctly display teaser for anonymous post to post author', async () => {
 		const result = await topics.getTopicsByTids([tid], adminUid);
-		assert(result[0].user.username === 'admi 0');
+		assert(result[0].user.username === 'admin 0');
 		assert(result[0].user.userslug === 'admin-0');
 		assert(result[0].user.picture === 'some-picture-url');
 	});
