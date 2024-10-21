@@ -1,0 +1,19 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - f24
+  pull_request:
+    branches:
+      - f24
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Run MegaLinter
+        uses: oxsecurity/megalinter@v8.1.0
