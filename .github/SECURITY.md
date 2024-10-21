@@ -2,7 +2,7 @@
 
 NodeBB's security policy is based around a private bug bounty program. Users are invited to explore NodeBB for vulnerabilities, and report them to the NodeBB team so that they can be patched.
 
-If you have found a security vulnerability, **do not post it onto our GitHub tracker**. Some security vulnerabilities are quite severe and discretion is recommended. Email the NodeBB Security Team at security@nodebb.org, instead, even if you are not sure whether something qualifies.
+If you have found a security vulnerability, **do not post it onto our GitHub tracker**. Some security vulnerabilities are quite severe and discretion is recommended. Email the NodeBB Security Team at <security@nodebb.org>, instead, even if you are not sure whether something qualifies.
 
 # Bug Bounty Program
 

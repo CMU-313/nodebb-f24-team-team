@@ -14,6 +14,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Run MegaLinter
         uses: oxsecurity/megalinter@v8.1.0

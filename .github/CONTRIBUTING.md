@@ -19,7 +19,7 @@ Chances are somebody has run into this problem before. After consulting our [doc
 
 # Found a Security Vulnerability?
 
-If you believe you have identified a security vulnerability with NodeBB, report it as soon as possible via email to **security@nodebb.org**.
+If you believe you have identified a security vulnerability with NodeBB, report it as soon as possible via email to **<security@nodebb.org>**.
 A member of the NodeBB security team will respond to the issue.
 Please do not post it to the public bug tracker.
 
@@ -46,8 +46,8 @@ You can find the NodeBB version number in the Admin Control Panel (ACP), as well
 If you are running NodeBB via git, it is also helpful to let the maintainers know what commit hash you are on. To find the commit hash, execute the following command:
 
 ``` bash
-$ cd /path/to/my/nodebb
-$ git rev-parse HEAD
+cd /path/to/my/nodebb
+git rev-parse HEAD
 ```
 
 If you have downloaded the `.zip` or `.tar.gz` packages from GitHub (or elsewhere), please let us know.

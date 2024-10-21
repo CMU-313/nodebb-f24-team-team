@@ -13,7 +13,7 @@ For our changes to show up perform the following steps (in addition to regular N
 
 <img width="1329" alt="Submit anonymous button" src="https://github.com/user-attachments/assets/84ec9292-5397-44da-851c-5d1feed836f7">
 
-- User will now be anonymous to other users. Other users can not see an anonymous post name nor picture, nor can they 
+- User will now be anonymous to other users. Other users can not see an anonymous post name nor picture, nor can they
 click on name to take them to their account
 
 <img width="637" alt="Anonymous user" src="https://github.com/user-attachments/assets/5330aeb8-5f67-4c6a-8ac9-3e4cf4ff229a">
@@ -32,6 +32,6 @@ a frontend button that has an event listener set up for the future, but currentl
 
 ### Testing
 
-Our backend tests can be found in the file [`tests/posts/anonymous.js`](https://github.com/CMU-313/nodebb-f24-team-team/blob/f24/test/posts/anonymous.js). In this file, we validate our two primary backend changes. 
+Our backend tests can be found in the file [`tests/posts/anonymous.js`](https://github.com/CMU-313/nodebb-f24-team-team/blob/f24/test/posts/anonymous.js). In this file, we validate our two primary backend changes.
 - Firstly, we check that we correctly handle the logic related to displaying anonymous posts: posts that are anonymous should show up with a corresponding 'Anonymous' displayname, userslug, and picture only to viewers who aren't the original poster. When the original poster views an anonymous post, they should see all the details normally, with the exception that the displayname is followed by '(anonymous).' The tests change that this expected behavior is seen both for the posts, as well as the post thumbnails when viewed from the topics page.
-- Secondly, we check that users are unable to register with 'anonymous' in their username to prevent confusing behavior in NodeBB when handling anonymous posts. Here, we check both that users cannot register with 'anonymous' in their username, but can successfully register without 'anonymous' in their username. 
+- Secondly, we check that users are unable to register with 'anonymous' in their username to prevent confusing behavior in NodeBB when handling anonymous posts. Here, we check both that users cannot register with 'anonymous' in their username, but can successfully register without 'anonymous' in their username.
