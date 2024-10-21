@@ -30,7 +30,7 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: '20.17.0'
 
       - name: Set up NodeBB
         run: |
