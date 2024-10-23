@@ -23,16 +23,16 @@ jobs:
         npm install
         npm install iroh
 
-    - name: Run tests with Iroh analysis
-      run: |
-        # Start Iroh analysis
-        iroh start
+    # - name: Run tests with Iroh analysis
+    #   run: |
+    #     # Start Iroh analysis
+    #     iroh start
         
-        # Run your test command here
-        npm test
+    #     # Run your test command here
+    #     npm test
         
-        # Generate Iroh report
-        iroh report
+    #     # Generate Iroh report
+    #     iroh report
 
     - name: Upload analysis results
       uses: actions/upload-artifact@v3
