@@ -8,7 +8,7 @@ on:
     branches:
       - f24
   workflow_dispatch:
-    
+
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true
@@ -21,7 +21,6 @@ jobs:
   build-and-deploy:
     if: github.repository == 'cmu-313/nodebb-f24-team-team'
     needs: lint-and-test
-
     runs-on: ubuntu-latest
 
     steps:
@@ -31,18 +30,17 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.17.0'
-            
+
+      - name: Install dependencies
+        run: npm install
+
       - name: Set up NodeBB
         run: |
-          ./nodebb setup '{"url":"https://nodebb-team-team.azurewebsites.net:443",
-            "admin:username": "admin",
-            "admin:password": "${{ secrets.ADMIN_PASSWORD }}",
-            "admin:password:confirm": "${{ secrets.ADMIN_PASSWORD }}",
-            "admin:email": "rohanpadhye@cmu.edu",
-            "database": "redis",
-            "redis:host": "${{ secrets.REDIS_HOST }}",
-            "redis:port": "6379",
-            "redis:password": "${{ secrets.REDIS_PASSWORD }}" }'
+          ./nodebb setup \
+            '{"url":"https://nodebb-team-team.azurewebsites.net:443", \
+            "admin":{"username":"admin", "password":"${{ secrets.ADMIN_PASSWORD }}", "email":"rohanpadhye@cmu.edu"}, \
+            "database":"redis", \
+            "redis":{"host":"${{ secrets.REDIS_HOST }}", "port":"6379", "password":"${{ secrets.REDIS_PASSWORD }}"}}'
 
       - name: Sync Frontend Changes
         run: |
@@ -52,7 +50,7 @@ jobs:
           cd src/plugins/nodebb-plugin-composer-default && npm link
           cd ../../ && npm link nodebb-plugin-composer-default
           cd .. && ./nodebb build
-          
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
