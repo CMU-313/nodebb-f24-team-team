@@ -46,10 +46,12 @@ jobs:
 
       - name: Sync Frontend Changes
         run: |
+          npm uninstall nodebb-theme-harmony
+          npm install ./nodebb-theme-harmony
           npm uninstall nodebb-plugin-composer-default
           cd src/plugins/nodebb-plugin-composer-default && npm link
           cd ../../ && npm link nodebb-plugin-composer-default
-          ./nodebb build
+          cd.. && ./nodebb build
           
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
