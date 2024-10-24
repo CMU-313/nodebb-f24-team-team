@@ -20,9 +20,7 @@ jobs:
         node-version: '18'
 
     - name: Install dependencies
-      run: |
-        npm install
-        npm install flow
+      run: npm install
 
     - name: Run Flow type check
       run: npx flow check
