@@ -46,6 +46,8 @@ jobs:
 
       - name: Sync Frontend Changes
         run: |
+          rm -rf ./node_modules/nodebb-theme-harmony
+          rm -rf ./node_modules/nodebb-plugin-composer-default
           npm uninstall nodebb-theme-harmony
           npm install ./nodebb-theme-harmony
           npm uninstall nodebb-plugin-composer-default
