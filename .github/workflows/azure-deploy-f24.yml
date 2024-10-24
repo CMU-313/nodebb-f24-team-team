@@ -31,6 +31,25 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.17.0'
+            
+      - name: Uninstall nodebb-plugin-composer-default
+        run: |
+          npm uninstall nodebb-plugin-composer-default
+      - name: Link nodebb-plugin-composer-default
+        run: |
+          cd src/plugins/nodebb-plugin-composer-default && npm link
+          cd ../../.. && npm link nodebb-plugin-composer-default
+      
+      - name: Uninstall nodebb-theme-harmony
+        run: |
+          npm uninstall nodebb-theme-harmony
+      - name: Install nodebb-theme-harmony with frontend changes
+        run: |
+          npm install ./nodebb-theme-harmony
+
+      - name: Build NodeBB
+        run: |
+          ./nodebb build
 
       - name: Set up NodeBB
         run: |
