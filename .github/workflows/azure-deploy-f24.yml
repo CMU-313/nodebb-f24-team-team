@@ -32,21 +32,6 @@ jobs:
         with:
           node-version: '20.17.0'
             
-      - name: Uninstall nodebb-plugin-composer-default
-        run: |
-          npm uninstall nodebb-plugin-composer-default
-      - name: Link nodebb-plugin-composer-default
-        run: |
-          cd src/plugins/nodebb-plugin-composer-default && npm link
-          cd ../../.. && npm link nodebb-plugin-composer-default
-      
-      - name: Uninstall nodebb-theme-harmony
-        run: |
-          npm uninstall nodebb-theme-harmony
-      - name: Install nodebb-theme-harmony with frontend changes
-        run: |
-          npm install ./nodebb-theme-harmony
-
       - name: Set up NodeBB
         run: |
           ./nodebb setup '{"url":"https://nodebb-team-team.azurewebsites.net:443",
@@ -58,6 +43,15 @@ jobs:
             "redis:host": "${{ secrets.REDIS_HOST }}",
             "redis:port": "6379",
             "redis:password": "${{ secrets.REDIS_PASSWORD }}" }'
+
+      - name: Sync Frontend Changes
+        run: |
+          npm uninstall nodebb-plugin-composer-default
+          cd src/plugins/nodebb-plugin-composer-default && npm link
+          cd ../../ && npm link nodebb-plugin-composer-default
+          npm uninstall nodebb-theme-harmony
+          npm install ./nodebb-theme-harmony
+          ./nodebb build
           
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
