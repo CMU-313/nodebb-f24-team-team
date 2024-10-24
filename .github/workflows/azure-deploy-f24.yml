@@ -49,8 +49,6 @@ jobs:
           npm uninstall nodebb-plugin-composer-default
           cd src/plugins/nodebb-plugin-composer-default && npm link
           cd ../../ && npm link nodebb-plugin-composer-default
-          npm uninstall nodebb-theme-harmony
-          npm install ./nodebb-theme-harmony
           ./nodebb build
           
       - name: 'Deploy to Azure Web App'
