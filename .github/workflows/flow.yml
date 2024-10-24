@@ -17,10 +17,12 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 'lts/*'
+        node-version: '18'
 
     - name: Install dependencies
-      run: npm install
+      run: |
+        npm install
+        npm install flow
 
     - name: Run Flow type check
       run: npx flow check
