@@ -2,9 +2,9 @@ name: Jalangi Dynamic Analysis
 
 on:
   push:
-    branches: [ main ]
+    branches: [ f24 ]
   pull_request:
-    branches: [ main ]
+    branches: [ f24 ]
 
 jobs:
   analyze:
