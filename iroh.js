@@ -2,7 +2,7 @@
 
 const Iroh = require('iroh');
 
-// Asked help from co-pilot for this function as I needed to simplify parsing for Iroh.
+// function taken from Copilot
 function monitorFunction(fn, name) {
 	console.log(`Setting up Iroh monitoring for ${name}`);
 
