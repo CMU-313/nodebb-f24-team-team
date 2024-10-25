@@ -1,0 +1,63 @@
+name: Jalangi Dynamic Analysis
+
+on:
+  push:
+    branches: [ f24 ]
+  pull_request:
+    branches: [ f24 ]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: |
+        npm install -g @babel/core @babel/cli
+        npm install -g jalangi2
+
+    - name: Prepare analysis directory
+      run: |
+        mkdir -p analysis
+        echo 'J$.analysis = {
+          invokeFunPre: function(iid, f, base, args, isConstructor, isMethod) {
+            console.log("Function called at IID " + iid);
+          },
+          getField: function(iid, base, offset, val) {
+            console.log("Property access at IID " + iid + ": " + offset);
+            return val;
+          }
+        };' > analysis/analysis.js
+
+    - name: Run Jalangi analysis
+      run: |
+        # Instrument the source files
+        cd jalangi2
+        node src/js/commands/jalangi.js --inlineIID --inlineSource --analysis src/js/sample_analyses/ChainedAnalyses.js --analysis src/js/sample_analyses/dlint/Utils.js --analysis src/js/sample_analyses/dlint/CheckNaN.js --analysis src/js/sample_analyses/dlint/CompareFunctionWithPrimitives.
+        js --analysis src/js/sample_analyses/dlint/ShadowProtoProperty.js --analysis src/js/sample_analyses/dlint/ConcatUndefinedToString.js --analysis src/js/sample_a
+        nalyses/dlint/UndefinedOffset.js tests/octane/deltablue.js
+    - name: Run tests with instrumentation
+      run: |
+        # Run your test command here with instrumented files
+        # Example: npm test
+        node src/*.js
+
+    - name: Upload analysis results
+      uses: actions/upload-artifact@v4
+      with:
+        name: jalangi-analysis-results
+        path: jalangi_trace.json
+
+    - name: Process analysis results
+      run: |
+        if [ -f jalangi_trace.json ]; then
+          echo "Processing analysis results..."
+          # Add your custom processing logic here
+        fi
