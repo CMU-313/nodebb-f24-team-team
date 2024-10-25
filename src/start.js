@@ -2,10 +2,28 @@
 
 const nconf = require('nconf');
 const winston = require('winston');
+const irohMonitor = require('../iroh');
 
 const start = module.exports;
+const Topics = require('./topics');
+const User = require('./user');
+const Posts = require('./posts');
 
 start.start = async function () {
+	console.log('Initializing Iroh monitoring...');
+	try {
+		// I chose to monitor core NodeBB functions such as creating new/replying to topics, posts, and users.
+		if (Topics.create) Topics.create = irohMonitor.monitorFunction(Topics.create, 'Topics.create');
+		if (Topics.post) Topics.post = irohMonitor.monitorFunction(Topics.post, 'Topics.post');
+		if (Topics.reply) Topics.reply = irohMonitor.monitorFunction(Topics.reply, 'Topics.reply');
+		if (Posts.create) Posts.create = irohMonitor.monitorFunction(Posts.create, 'Posts.create');
+		if (Posts.edit) Posts.edit = irohMonitor.monitorFunction(Posts.edit, 'Posts.edit');
+		if (User.create) User.create = irohMonitor.monitorFunction(User.create, 'User.create');
+
+		console.log('NodeBB core functions are now set up for monitoring!!');
+	} catch (err) {
+		console.error('Failed to initialize monitoring...', err);
+	}
 	printStartupInfo();
 
 	addProcessHandlers();
