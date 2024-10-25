@@ -78,7 +78,7 @@
         "imagesloaded": "5.0.0",
         "ioredis": "5.4.1",
         "ipaddr.js": "2.2.0",
-        "iroh": "^0.3.0",
+        "iroh": "0.3.0",
         "jquery": "3.7.1",
         "jquery-deserialize": "2.0.0",
         "jquery-form": "4.3.0",
