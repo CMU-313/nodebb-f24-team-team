@@ -47,6 +47,7 @@ jobs:
       - name: Sync Frontend Changes
         run: |
           npm install https://github.com/CMU-313/nodebb-frontend-f24-team-team.git
+          npm install https://github.com/margarethe913/nodebb-f24-team-team-theme-harmony.git
           ./nodebb build
           
       - name: 'Deploy to Azure Web App'
