@@ -19,3 +19,4 @@ logs/
 test/files
 *.min.js
 install/docker/
+lib/*
