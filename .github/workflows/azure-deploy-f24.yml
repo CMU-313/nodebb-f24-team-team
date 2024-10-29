@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - f24
+      - fix-azure-build-fail
   workflow_dispatch:
     
 concurrency:
@@ -31,6 +32,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.17.0'
+      
+      - name: Install Yarn
+        run: npm install -g yarn
+      
+      - name: Install dependencies
+        run: yarn install
             
       - name: Set up NodeBB
         run: |
