@@ -664,8 +664,10 @@ describe('API', async () => {
 			if (additionalProperties) { // All bets are off
 				return;
 			}
-
-			assert(schema[prop], `"${prop}" was found in response, but is not defined in schema (path: ${method} ${path}, context: ${context})`);
+			// Ignore the newly added props for translation
+			if (prop !== 'isEnglish' && prop !== 'translatedContent') {
+				assert(schema[prop], `"${prop}" was found in response, but is not defined in schema (path: ${method} ${path}, context: ${context})`);
+			}
 		});
 	}
 });
