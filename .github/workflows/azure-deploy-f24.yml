@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - f24
+      - fix-azure-build-fail
   workflow_dispatch:
     
 concurrency:
@@ -30,8 +31,14 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
-
+          node-version: '20.17.0'
+      
+      - name: Install Yarn
+        run: npm install -g yarn
+      
+      - name: Install dependencies
+        run: yarn install
+            
       - name: Set up NodeBB
         run: |
           ./nodebb setup '{"url":"https://nodebb-team-team.azurewebsites.net:443",
@@ -43,6 +50,12 @@ jobs:
             "redis:host": "${{ secrets.REDIS_HOST }}",
             "redis:port": "6379",
             "redis:password": "${{ secrets.REDIS_PASSWORD }}" }'
+
+      - name: Sync Frontend Changes
+        run: |
+          npm install https://github.com/margarethe913/nodebb-f24-team-team-theme-harmony.git
+          npm install https://github.com/CMU-313/nodebb-frontend-f24-team-team.git
+          ./nodebb build
           
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
